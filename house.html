@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>house</title>
+		<style type="text/css">
+			#mycans{
+				border: #FF0000 dashed 3px;
+			}
+		</style>
+		<script type="text/javascript">
+			window.onload=function(){
+				var c=document.getElementById("mycans");
+				var tet=c.getContext("2d");
+				tet.strokeStyle="#00FF00";
+				tet.lineWidth="3px";
+				tet.beginPath();
+				tet.moveTo(500,300);
+				tet.lineTo(700,450);
+				tet.lineTo(300,450);
+				tet.lineTo(500,300);
+				tet.fillStyle="#CC0000"
+				tet.fill();
+				tet.stroke();
+				tet.beginPath();
+				tet.strokeStyle="#333333";
+				tet.lineWidth="3px";
+				tet.moveTo(300,450);
+				tet.lineTo(300,800);
+				tet.lineTo(700,800);
+				tet.lineTo(700,450);
+				tet.fillStyle="azure";
+				tet.fill();
+				tet.stroke();
+				tet.beginPath();
+				tet.strokeStyle="#CC0000";
+				tet.moveTo(350,500);
+				tet.lineTo(350,600);
+				tet.lineTo(450,600);
+				tet.lineTo(450,500);
+				tet.lineTo(350,500);
+				tet.fillStyle="aqua";
+				tet.fill();
+				tet.stroke();
+				tet.beginPath();
+				tet.moveTo(700,600);
+				tet.lineTo(600,600);
+				tet.lineTo(600,800);
+				tet.stroke();
+				tet.beginPath();
+				tet.moveTo(560,346);
+				tet.lineTo(560,310);
+				tet.lineTo(650,310);
+				tet.lineTo(650,414);
+				tet.fillStyle="chocolate";
+				tet.fill();
+				tet.stroke();
+				tet.beginPath();
+				tet.moveTo(350,550);
+				tet.lineTo(450,550);
+				tet.stroke();
+				tet.beginPath();
+				tet.moveTo(400,500);
+				tet.lineTo(400,600);
+				tet.stroke();
+				tet.beginPath();
+				tet.arc(690,700,10,0,360);
+				tet.fillStyle="#333333";
+				tet.fill();
+				tet.stroke();
+			};
+		</script>
+	</head>
+	<body>
+		<canvas id="mycans" width="1000px" height="1000px"></canvas>
+	</body>
+</html>

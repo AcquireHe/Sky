@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>myOwnWeb</title>
+	<style>        
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+#wrap{width:500px;height:333px;margin:0 auto;position:relative;margin-top:100px}
+#wrap img{position:absolute;  border-radius: 20px;
+    box-shadow: 0px 0px 10px #6F8363}
+#Prev {
+    width: 76px;
+    height: 112px;
+    left: 0;
+    bottom:0;
+    background:url("img/1106616.jpg")no-repeat left  center;
+    position: absolute;
+    z-index: 100;
+    cursor:pointer;
+}
+
+#Next {
+    width: 76px;
+    height: 112px;
+    bottom:0;
+    right: 0;
+    background:url("img/1106614.jpg")no-repeat right  center;
+    position: absolute;
+    z-index: 100;
+    cursor:pointer;
+
+}
+.pos_1{
+    width:280px;
+    left:-180px;
+    top:-290px;
+    z-index: 0;
+    opacity:1;
+    filter:alpha(opacity:1);
+}
+.pos_2{
+    width:280px;
+    left:-180px;
+    top:68px;
+    z-index: 1;
+    opacity:0.4;
+    filter:alpha(opacity:40);
+}
+.pos_3 {
+   width:380px;
+    left:-105px;
+    top:35px;
+    z-index:2;
+    opacity:0.8;
+    filter:alpha(opacity:80);
+}
+.pos_4{
+    width:500px;
+    left:0px;
+    top:0px;
+    z-index: 3;
+    opacity:1;
+    filter:alpha(opacity:1);
+}
+.pos_5{
+    width:380px;
+    left:225px;
+    top:35px;
+    z-index:2;
+    opacity:0.8;
+    filter:alpha(opacity:80);
+}
+.pos_6{
+    width:280px;
+    left:400px;
+    top:68px;
+    z-index: 1;
+    opacity:0.4;
+    filter:alpha(opacity:40);
+}
+.pos_7{
+    width:280px;
+    left:400px;
+    top:-290px;
+    z-index: 0;
+    opacity:0;
+    filter:alpha(opacity:0);
+}
+</style>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+</head>
+<body>
+	<div id="wrap">
+    	<img src="img/IMG_0070.jpg"  class="pos_1" name="img1">
+    	<img src="img/IMG_0074.jpg" class="pos_2" name="img1">
+    	<img src="img/IMG_0078.jpg"  class="pos_3" name="img1">
+    	<img src="img/IMG_0132.jpg"  class="pos_7" name="img1">
+    	<img src="img/IMG_0084.jpg"  class="pos_4" name="img1">
+    	<img src="img/IMG_0137.jpg"  class="pos_5" name="img1">
+    	<img src="img/IMG_0089.jpg"  class="pos_6" name="img1">
+    <div id="Prev"></div>
+    <div id="Next"></div>
+</div>
+</body>
+<script type="text/javascript">
+       window.onload=function(){
+    var oLeft=document.getElementById('left');
+    var oRight=document.getElementById('right');
+    var oNext=document.getElementById('Next');
+    var oPrev=document.getElementById('Prev');
+    var oImg=document.getElementsByName('img1');
+    var arr=[];
+    var timer=null;
+    jQuery.extend(jQuery.easing,{
+        easeOutBounce: function (x, t, b, c, d) {
+            if ((t/=d) < (1/2.75)) {
+                return c*(7.5625*t*t) + b;
+            } else if (t < (2/2.75)) {
+                return c*(7.5625*(t-=(1.5/2.75))*t + .75) + b;
+            } else if (t < (2.5/2.75)) {
+                return c*(7.5625*(t-=(2.25/2.75))*t + .9375) + b;
+            } else {
+                return c*(7.5625*(t-=(2.625/2.75))*t + .984375) + b;
+            }
+        },
+    });
+    for(var i=0;i<oImg.length;i++){
+        //保存每个图片的left,width，opacity,zIndex到二维数组中
+        arr.push([parseInt(getStyle(oImg[i],"left")),parseInt(getStyle(oImg[i],"top")),parseInt(getStyle(oImg[i],"width")),parseFloat(getStyle(oImg[i],"opacity"))*100,parseInt(getStyle(oImg[i],"zIndex"))]);
+    }
+    oNext.onclick=function(){
+        clearInterval(timer);
+        arr.unshift(arr[arr.length-1]);
+        arr.pop();
+        for(var i=0;i<oImg.length;i++){
+            startMove(oImg[i],{'left':arr[i][0],'top':arr[i][1],'width':arr[i][2],'opacity':arr[i][3],'zIndex':arr[i][4]});
+        }
+    };
+    oPrev.onclick=function(){
+        clearInterval(timer);
+        tab();
+
+    };
+    function tab(){
+        arr.push(arr[0]);
+        arr.shift();
+        for(var i=0;i<oImg.length;i++){
+                startMove(oImg[i],{'left':arr[i][0],'top':arr[i][1],'width':arr[i][2],'opacity':arr[i][3],'zIndex':arr[i][4]});
+        }
+    }
+    function startMove(obj,json,fn){
+            obj=$(obj);
+        obj.css({zIndex:json.zIndex});
+        obj.stop(true).animate({
+            opacity:json.opacity/100,
+            top:json.top+'px',
+            width:json.width+'px',
+            left:[json.left+'px','easeOutBounce']
+        },300);
+    }
+    /*
+    * 通用获取dom对象的非行间属性*/
+    function getStyle(obj,attr){
+        if(obj.currentStyle){//兼容IEcurrentStyle和getComputedStyle两个返回的都是一个对象
+            return obj.currentStyle[attr];
+        }
+        else {
+            return getComputedStyle(obj,false)[attr];
+        }
+    }
+}
+</script>
+</html>
